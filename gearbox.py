@@ -235,7 +235,10 @@ class StickHandler(EventHandler):
 
     def _update_gear(self):
         global gear
-        self.pm.write_int(0x07A8B134, gear + 1)
+
+        addr = self.pm.read_uint(self.pm.base_address + 0x0049CE58)
+        addr = self.pm.read_uint(addr + 8) + 0x1E4
+        self.pm.write_int(addr, gear + 1)
 
     def process_stick_event(self, event):
         global gear_x, gear_y, gear
@@ -285,6 +288,9 @@ def main():
 
     handler = StickHandler(
         0,
+        1,
+        2,
+        3,
         filter=XInput.STICK_RIGHT + XInput.BUTTON_RIGHT_THUMB,
         display=GearDisplay(canvas),
     )
