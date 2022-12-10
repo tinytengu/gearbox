@@ -1,5 +1,6 @@
 import tkinter as tk
 
+import pymem
 import XInput
 from XInput import EventHandler, GamepadThread
 
@@ -230,6 +231,11 @@ class StickHandler(EventHandler):
     def __init__(self, *controllers, filter: int, display: GearDisplay):
         super().__init__(*controllers, filter=filter)
         self.display = display
+        self.pm = pymem.Pymem("speed2.exe")
+
+    def _update_gear(self):
+        global gear
+        self.pm.write_int(0x07A8B134, gear + 1)
 
     def process_stick_event(self, event):
         global gear_x, gear_y, gear
@@ -254,6 +260,7 @@ class StickHandler(EventHandler):
 
         if gear_val := GEARS.get((gear_x, gear_y)):
             gear = gear_val
+            self._update_gear()
 
         self.display.update_control_circle()
         self.display.update_circles()
@@ -263,11 +270,11 @@ class StickHandler(EventHandler):
         if event.type == XInput.EVENT_BUTTON_PRESSED:
             if event.button == "RIGHT_THUMB":
                 gear = 0
-
-            self.display.update_circles()
+                self._update_gear()
+                self.display.update_circles()
 
     def process_connection_event(self, event):
-        pass
+        self.display.update_circles()
 
 
 def main():

@@ -5,4 +5,5 @@ mypy-extensions==0.4.3
 pathspec==0.10.3
 platformdirs==2.6.0
 pycodestyle==2.10.0
+Pymem==1.10.0
 XInput-Python==0.4.0
