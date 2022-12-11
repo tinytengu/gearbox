@@ -65,7 +65,7 @@ class App:
                 addr = self.pm.read_uint(addr + 8) + 0x1E4
                 gear = self.pm.read_int(addr) - 1
             except pymem.exception.MemoryReadError:
-                continue
+                print("Unable to write to an address!")
 
             if self.gear != gear:
                 self.gear = gear
