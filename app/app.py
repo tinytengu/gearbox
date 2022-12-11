@@ -286,12 +286,14 @@ class StickHandler(EventHandler):
             0, 1, 2, 3, filter=XInput.STICK_RIGHT + XInput.BUTTON_RIGHT_THUMB
         )
         self.app = app
-        self.pm = pymem.Pymem("speed2.exe")
 
     def _update_gear(self, gear: int):
-        addr = self.pm.read_uint(self.pm.base_address + 0x0049CE58)
-        addr = self.pm.read_uint(addr + 8) + 0x1E4
-        self.pm.write_int(addr, gear + 1)
+        if not self.app.pm_initialized:
+            return
+
+        addr = self.app.pm.read_uint(self.app.pm.base_address + 0x0049CE58)
+        addr = self.app.pm.read_uint(addr + 8) + 0x1E4
+        self.app.pm.write_int(addr, gear + 1)
 
     def process_stick_event(self, event):
         sens_switch = 0.5
