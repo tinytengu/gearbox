@@ -1,0 +1,14 @@
+{
+  "gears": 6,
+  "autodetect_gears": false,
+  "show_reverse": false,
+  "theme": {
+    "bg_color": "#171717",
+    "line_color": "#262626",
+    "gear_inactive_color": "#262626",
+    "gear_active_color": "#22C55E",
+    "control_circle_color": "#22C55E",
+    "line_size": 15,
+    "circle_size": 40
+  }
+}
